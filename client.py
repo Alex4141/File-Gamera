@@ -19,7 +19,7 @@ def getDirectory():
 def createFile(currentSocket):
 	currentDirectory = getDirectory()
 	filename = currentDirectory + '/' +  currentSocket.recv(1024)
-	newFile = open(filename, 'wb')
+	newFile = open(filename, 'a')
 	appendData(currentSocket, newFile)
 
 # Get 1024 bytes at a time and append it to the file
@@ -28,7 +28,7 @@ def appendData(currentSocket, transferFile):
 		chunk = currentSocket.recv(1024)
 		if chunk:
 			transferFile.write(chunk)
-			chunk = currentSocket.recv(1024)
+			transferFile.flush()
 		else:
 			transferFile.close()
 			print("FTP Complete")
