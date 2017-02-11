@@ -15,11 +15,7 @@ def socketConf():
 	return sock
 
 # Two states: Passing the filename and then passing file content
-def stateSend(connectionSocket, serveFile, currentState):
-	if currentState == 0:
-		connectionSocket.send(os.path.split(serveFile.name)[1])
-		stateSend(connectionSocket,serveFile, 1)
-	else:
+def stateSend(connectionSocket, serveFile):
 		for line in serveFile:
 			connectionSocket.send(line)
 		connectionSocket.close()
@@ -34,6 +30,6 @@ sock = socketConf()
 
 while True:
 	conn, address = sock.accept()
-	stateSend(conn,currFile,0)
+	stateSend(conn,currFile)
 	conn.close()
 	break
